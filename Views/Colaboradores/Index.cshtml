@@ -1,0 +1,86 @@
+﻿@model IEnumerable<Empresa.Models.Colaborador>
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Colaborador</h1>
+
+@if (SignInManager.IsSignedIn(User) && User.IsInRole("SupAdmin"))
+                {
+                    <p>
+                        <a asp-action="Create">Create New</a>
+                    </p>
+                }
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Genero)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DataNascimento)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DocumentoIdentificacao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Telefone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Departamento)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Funcao)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Genero)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataNascimento)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DocumentoIdentificacao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Telefone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Departamento.NomeDepartamento)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Funcao.NomeFuncao)
+            </td>
+                @if (SignInManager.IsSignedIn(User) && User.IsInRole("SupAdmin"))
+                {
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.ColaboradorId">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.ColaboradorId">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.ColaboradorId">Delete</a>
+                    </td>
+                }
+        </tr>
+}
+    </tbody>
+</table>
